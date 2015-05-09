@@ -3,6 +3,7 @@ package br.com.casadocodigo.loja.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.WebApplicationContext;
@@ -42,5 +43,11 @@ public class ShoppingCartController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String items() {
 		return "shoppingCart/items";
+	}
+	
+	@RequestMapping(method=RequestMethod.POST,value="/{productId}")
+	public String remove(@PathVariable("productId") Integer productId,BookType bookType){
+		shoppingCart.remove(createItem(productId, bookType));
+		return "redirect:/shopping";
 	}
 }
