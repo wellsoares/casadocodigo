@@ -1,7 +1,6 @@
 package br.com.casadocodigo.loja.models;
 
 import java.util.ArrayList;
-
 import java.util.Calendar;
 import java.util.List;
 
@@ -15,6 +14,7 @@ import javax.validation.constraints.Min;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 //https://github.com/hibernate/hibernate-validator/blob/master/engine/src/main/resources/org/hibernate/validator/ValidationMessages.properties
 //LINK PARA ALTERAR TODAS AS MENSAGENS PADRAO
@@ -32,8 +32,17 @@ public class Product {
 	private String description;
 	@Min(30)
 	private int pages;
-	@DateTimeFormat
+	@DateTimeFormat(iso=ISO.DATE)
 	private Calendar releaseDate;
+	private String summaryPath;
+
+	public String getSummaryPath() {
+		return summaryPath;
+	}
+
+	public void setSummaryPath(String summaryPath) {
+		this.summaryPath = summaryPath;
+	}
 
 	@ElementCollection
 	private List<Price> prices = new ArrayList<Price>();
