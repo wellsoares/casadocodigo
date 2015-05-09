@@ -1,4 +1,6 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
 
 <!DOCTYPE html>
 <html>
@@ -7,7 +9,7 @@
 <title>Cadastro de produtos</title>
 </head>
 <body>
-	<form method="post" action="/casadocodigo/produtos">
+	<form action="${spring:mvcUrl('PC#save').build()}" method="post">
 		<div>
 			<label for="title">Titulo</label> <input type="text" name="title"
 				id="title" />
@@ -27,11 +29,21 @@
 
 	<c:forEach items="${types}" var="bookType" varStatus="status">
 		<div>
-			<label for="price_${bookType}">${bookType}</label> 
-			<input type="text" name="prices[${status.index}].value" id="price_${bookType}" /> 
-			<input type="hidden" name="prices[${status.index}].bookType" value="${bookType}" />
+			<label for="price_${bookType}">${bookType}</label> <input type="text"
+				name="prices[${status.index}].value" id="price_${bookType}" /> <input
+				type="hidden" name="prices[${status.index}].bookType"
+				value="${bookType}" />
 		</div>
 	</c:forEach>
+
+	<spring:hasBindErrors name="product">
+		<ul>
+			<c:forEach var="error" items="${errors.allErrors}">
+				<li><spring:message code="${error.code}"
+						text="${error.defaultMessage}" /></li>
+			</c:forEach>
+		</ul>
+	</spring:hasBindErrors>
 
 </body>
 </html>

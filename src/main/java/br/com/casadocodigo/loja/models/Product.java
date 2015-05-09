@@ -25,6 +25,12 @@ public class Product {
 	@ElementCollection
 	private List<Price> prices = new ArrayList<Price>();
 
+	public List<Price> getPrices() {
+		return prices;
+	}
+	public void setPrices(List<Price> prices) {
+		this.prices = prices;
+	}
 	public String getTitle() {
 		return title;
 	}
