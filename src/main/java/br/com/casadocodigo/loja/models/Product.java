@@ -1,5 +1,6 @@
 package br.com.casadocodigo.loja.models;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -15,6 +16,8 @@ import javax.validation.constraints.Min;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
+
+import br.com.casadocodigo.loja.enums.BookType;
 
 //https://github.com/hibernate/hibernate-validator/blob/master/engine/src/main/resources/org/hibernate/validator/ValidationMessages.properties
 //LINK PARA ALTERAR TODAS AS MENSAGENS PADRAO
@@ -32,7 +35,7 @@ public class Product {
 	private String description;
 	@Min(30)
 	private int pages;
-	@DateTimeFormat(iso=ISO.DATE)
+	@DateTimeFormat(iso = ISO.DATE)
 	private Calendar releaseDate;
 	private String summaryPath;
 
@@ -90,6 +93,18 @@ public class Product {
 	@Override
 	public String toString() {
 		return this.title + " " + this.pages;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
+	public BigDecimal priceFor(BookType bookType) {
+		return prices.stream().filter(price -> price.getBookType().equals(bookType)).findFirst().get().getValue();
 	}
 
 }
